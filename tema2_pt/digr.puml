@@ -1,0 +1,148 @@
+@startuml
+class BusinessLogic.ConcreteStrategyQueue {
++ void addTask(List<Server>,Task,int)
+}
+class BusinessLogic.Scheduler {
+- List<Server> servers
+- int maxNoServers
+- int maxTasksPerserver
+- Strategy strategy
++ void changeStrategy(int)
++ void dispatchTask(Task)
++ int getSize()
++ boolean verifyServers()
++ List<Server> getServers()
++ void printServers()
+}
+class org.example.App {
++ {static} void main(String[])
+}
+class BusinessLogic.SimulationManager {
++ int timeLimit
++ int maxProcessingTime
++ int minProcessingTime
++ int maxArrivalTime
++ int minArrivalTime
++ int numberOfServers
++ int numberOfClients
+- Scheduler scheduler
+- List<Task> generateTask
++ FileWriter fileOut
+~ GUI gui
+~ Thread t
+~ int strategy
++ void setTimeLimit(int)
++ {static} boolean isInteger(String)
+- void generateNRandomTasks()
++ float averageTime(List<Server>)
++ float averageServiceTime(List<Task>)
++ int getMaxProcessingTime()
++ void setMaxProcessingTime(int)
++ int getMinProcessingTime()
++ void setMinProcessingTime(int)
++ int getMaxArrivalTime()
++ void setMaxArrivalTime(int)
++ int getMinArrivalTime()
++ void setMinArrivalTime(int)
++ int getNumberOfServers()
++ void setNumberOfServers(int)
++ int getNumberOfClients()
++ void setNumberOfClients(int)
++ void run()
++ {static} void main(String[])
+}
+class BusinessLogic.SimulationManager.StartListener {
++ void actionPerformed(ActionEvent)
+}
+class BusinessLogic.SimulationManager.Start2Listener {
++ void actionPerformed(ActionEvent)
+}
+interface BusinessLogic.Strategy {
++ void addTask(List<Server>,Task,int)
+}
+class Model.Server {
+- BlockingQueue<Task> tasks
+- AtomicInteger waitingPeriod
+- int wait
++ int getWait()
++ void setWait(int)
++ int getTasksSize()
++ void addTask(Task)
++ void run()
++ void setTasks(BlockingQueue<Task>)
++ AtomicInteger getWaitingPeriod()
++ void setWaitingPeriod(AtomicInteger)
++ Task[] getTasks()
++ String printServer()
+}
+class Model.Task {
++ boolean toString
+- int arrivalTime
+- AtomicInteger serviceTime
+- int id
+- {static} int makeId
++ int getId()
++ void setId(int)
++ int getArrivalTime()
++ void setArrivalTime(int)
++ AtomicInteger getServiceTime()
++ void setServiceTime(AtomicInteger)
++ String toString()
+}
+class View.GUI {
+~ Border border
+- JPanel panel
+- JLabel title
+- JLabel timeLimit
+- JLabel numerOfClientsLbl
+- JLabel numberOfServersLbl
+- JLabel minArrivalTimeLbl
+- JLabel maxArrivalTimeLbl
+- JLabel minServiceTimeLbl
+- JLabel maxServiceTimeLbl
+- JTextField numOfClientsTxt
+- JTextField numOfServiceTxt
+- JTextField minArrivalTimeTxt
+- JTextField maxArrivalTimeTxt
+- JTextField minServiceTimeTxt
+- JTextField maxServiceTimeTxt
+- JTextField timeLimitTxt
+- JButton startBtn
+- JButton start2Btn
+- JTextArea resultTxt
+- JScrollPane scroll
++ void insertPanel()
++ JTextField getTimeLimitTxt()
++ JLabel getTimeLimit()
++ void addBtn()
+- void createButton(JButton)
+- void createResultText()
++ void setResultTxt(JTextArea)
++ JTextField getNumOfClientsTxt()
++ JTextField getNumOfServiceTxt()
++ JTextField getMinArrivalTimeTxt()
++ JTextField getMaxArrivalTimeTxt()
++ JTextField getMinServiceTimeTxt()
++ JTextField getMaxServiceTimeTxt()
++ JButton getStartBtn()
++ JTextArea getResultTxt()
++ void addStartListener(ActionListener)
++ void addStart2Listener(ActionListener)
++ String getUserInput(JTextField)
++ void refreshFrame(String)
+}
+class BusinessLogic.ConcreteStrategyTime {
++ void addTask(List<Server>,Task,int)
+}
+
+
+BusinessLogic.Strategy <|.. BusinessLogic.ConcreteStrategyQueue
+BusinessLogic.Runnable <|.. BusinessLogic.SimulationManager
+BusinessLogic.SimulationManager +.. BusinessLogic.SimulationManager.StartListener
+BusinessLogic.ActionListener <|.. BusinessLogic.SimulationManager.StartListener
+BusinessLogic.SimulationManager +.. BusinessLogic.SimulationManager.Start2Listener
+BusinessLogic.ActionListener <|.. BusinessLogic.SimulationManager.Start2Listener
+Model.Runnable <|.. Model.Server
+View.JFrame <|-- View.GUI
+BusinessLogic.Strategy <|.. BusinessLogic.ConcreteStrategyTime
+@enduml
